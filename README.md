@@ -1,5 +1,5 @@
 # Multi-Tier RDS Hierarchy
-This example show how you can create Multi-Tier RDS Hierarchy using Terraform
+This example shows how to can create Multi-Tier RDS Hierarchy using Terraform
 
 ## Usage
 To run this example you need to execute:
