@@ -2,15 +2,15 @@ module "level0" {
   source = "../../modules/rds"
   rds_instances = [
     {
-      instance_identifier        = "master",
-      storage_type               = "io1",
-      iops                       = 1500,
-      instance_class             = "db.r5.xlarge",
-      parameter_group_name       = "db-parameter-master",
-      availability_zone          = "eu-west-1b",
+      instance_identifier  = "master",
+      storage_type         = "io1",
+      iops                 = 1500,
+      instance_class       = "db.r5.xlarge",
+      parameter_group_name = "db-parameter-master",
+      availability_zone    = "eu-west-1b",
     }
   ]
-  instance_count                  = "1"
+  instance_count                  = 1
   backup_retention_enabled        = 1
   publicly_accessible             = var.publicly_accessible
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
@@ -33,13 +33,13 @@ module "level1-source" {
       instance_identifier        = "replica2",
       source_instance_identifier = module.level0.instance_identifier[0]
       storage_type               = "io1",
-      iops                       = 18000,
+      iops                       = 1500,
       instance_class             = "db.r5.2xlarge",
       parameter_group_name       = "db-parameter-replica2",
       availability_zone          = "eu-west-1c"
     }
   ]
-  instance_count                  = "2"
+  instance_count                  = 2
   backup_retention_enabled        = 1
   publicly_accessible             = var.publicly_accessible
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
@@ -63,7 +63,7 @@ module "level1-replica" {
       instance_identifier        = "replica4",
       source_instance_identifier = module.level0.instance_identifier[0]
       storage_type               = "io1",
-      iops                       = 1000,
+      iops                       = 1500,
       instance_class             = "db.r5.2xlarge"
       parameter_group_name       = "db-parameter-replica4",
       availability_zone          = "eu-west-1b"
@@ -72,16 +72,14 @@ module "level1-replica" {
       instance_identifier        = "replica5",
       source_instance_identifier = module.level0.instance_identifier[0]
       storage_type               = "io1",
-      iops                       = 1800,
+      iops                       = 1500,
       instance_class             = "db.r5.xlarge"
       parameter_group_name       = "db-parameter-replica5",
       availability_zone          = "eu-west-1c"
     }
   ]
-  instance_count = "3"
-
-  backup_retention_enabled = 0
-
+  instance_count                  = 3
+  backup_retention_enabled        = 0
   publicly_accessible             = var.publicly_accessible
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
@@ -114,14 +112,13 @@ module "level2-1-replica" {
       source_instance_identifier = module.level1-source.instance_identifier[0]
       instance_class             = "db.r5.xlarge",
       storage_type               = "io1",
-      iops                       = 1000,
+      iops                       = 1500,
       parameter_group_name       = "db-parameter-replica1-3",
       availability_zone          = "eu-west-1c"
     }
   ]
-  instance_count           = "3"
-  backup_retention_enabled = 0
-
+  instance_count                  = 3
+  backup_retention_enabled        = 0
   publicly_accessible             = var.publicly_accessible
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
@@ -153,15 +150,14 @@ module "level2-2-replica" {
       instance_identifier        = "replica2-3",
       source_instance_identifier = module.level1-source.instance_identifier[1]
       storage_type               = "io1",
-      iops                       = 1000,
+      iops                       = 1500,
       instance_class             = "db.r5.xlarge",
       parameter_group_name       = "db-parameter-replica2-3",
       availability_zone          = "eu-west-1c"
     }
   ]
-  instance_count           = "3"
-  backup_retention_enabled = 0
-
+  instance_count                  = 3
+  backup_retention_enabled        = 0
   publicly_accessible             = var.publicly_accessible
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
